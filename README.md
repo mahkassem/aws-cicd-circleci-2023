@@ -1,1 +1,1 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/mahkassem/express-server-deploy/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/mahkassem/express-server-deploy/tree/master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/mahkassem/aws-cicd-circleci-2023/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/mahkassem/aws-cicd-circleci-2023/tree/master)
