@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Passw0rd123
+    ports:
+      - 6453:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  server:
+    build: ./server
+    restart: always
+    ports:
+      - 3000:8080
+    depends_on:
+      - db
+    volumes:
+      - server-data:/app/storage
+    environment:
+      ENV: dev
+      DB_USER: postgres
+      DB_PASS: Passw0rd123
+      DB_HOST: db
+      DB_NAME: postgres
+      DB_TEST_NAME: school_test
+      DB_PORT: 5432
+      BCRYPT_SECRET: BcryptSecret
+      BCRYPT_SALT: 10
+      JWT_SECRET: JwtSecret
+      MAIL_HOST: smtp.mailtrap.io
+      MAIL_PORT: 587
+      MAIL_USER:
+      MAIL_PASS:
+  website:
+    build: ./website
+    restart: always
+    ports:
+      - 80:8080
+    depends_on:
+      - server
+
+volumes:
+  db-data:
+  server-data:

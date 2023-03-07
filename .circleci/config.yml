@@ -1,0 +1,42 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.0
+  aws-cli: circleci/aws-cli@2.1.0
+  eb: circleci/aws-elastic-beanstalk@2.0.1
+jobs:
+  prod:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - node/install:
+          node-version: 16.18.0
+      - aws-cli/setup
+      - eb/setup
+      - checkout
+      - run:
+          name: Install server dependencies
+          command: npm run install:server
+      - run:
+          name: Install website dependencies
+          command: npm run install:website
+      - run:
+          name: Build server
+          command: npm run build:server
+      - run:
+          name: Build website
+          command: npm run build:website
+      - run:
+          name: Deploy server
+          command: npm run deploy:server
+      - run:
+          name: Deploy website
+          command: npm run deploy:website
+
+workflows:
+  build-deploy:
+    jobs:
+      - prod:
+          filters:
+            branches:
+              only:
+                - master

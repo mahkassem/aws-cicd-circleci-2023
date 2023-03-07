@@ -1,0 +1,14 @@
+# Bundles
+dist
+node_modules
+archive.zip
+
+# Secrets
+.vscode
+.env
+
+# Elastic Beanstalk
+.elasticbeanstalk
+
+# Deploy
+bin

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School App</title>
+    <style>
+        .container {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin-bottom: 50px;
+            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        }
+
+        .students {
+            margin-top: 50px;
+        }
+
+        .student {
+            width: 800px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+            max-width: (100% - 40px);
+        }
+
+        .student-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .student-classroom {
+            font-size: 18px;
+            font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+            text-align: end;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>School App</h1>
+        <div class="students" id="students">
+            <p id="loading">Loading..</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var endpoint = "http://udacity-env.eba-eb3ujk48.us-east-1.elasticbeanstalk.com";
+        window.addEventListener("load", function (event) {
+            fetch(`${endpoint}/api/student?page=1&perPage=25`, {
+                headers: {
+                    "Content-Type": "application/json",                }
+            })
+                .then((response) => response.json())
+                .then((students) => {
+                    document.getElementById("loading").style.display = "none";
+                    const studentsElement = document.getElementById("students");
+                    students.forEach((student) => {
+                        const studentElement = document.createElement("div");
+                        studentElement.classList.add("student");
+                        studentElement.innerHTML = `
+                        <div class="student-text">${student.grade}</div>
+                        <div class="student-classroom">${student.classroom}</div>
+                    `;
+                        studentsElement.appendChild(studentElement);
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>
