@@ -11,26 +11,26 @@ jobs:
       - node/install:
           node-version: 16.18.0
       - aws-cli/setup
-      - eb/setup
       - checkout
-      - run:
-          name: Install server dependencies
-          command: npm run install:server
       - run:
           name: Install website dependencies
           command: npm run install:website
       - run:
-          name: Build server
-          command: npm run build:server
-      - run:
           name: Build website
           command: npm run build:website
       - run:
-          name: Deploy server
-          command: npm run deploy:server
-      - run:
           name: Deploy website
           command: npm run deploy:website
+      - run:
+          name: Install server dependencies
+          command: npm run install:server
+      - run:
+          name: Build server
+          command: npm run build:server
+      - eb/setup
+      - run:
+          name: Deploy server
+          command: npm run deploy:server
 
 workflows:
   build-deploy:
